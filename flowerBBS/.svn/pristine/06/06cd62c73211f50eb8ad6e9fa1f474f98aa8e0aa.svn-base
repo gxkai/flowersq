@@ -1,0 +1,41 @@
+#数据库地址，发布用
+jdbcUrl=jdbc:mysql://rm-k1hrtji3q71wivt01o.mysql.rds.aliyuncs.com:3306/homedb2?autoReconnect=true&rewriteBatchedStatements=TRUE&zeroDateTimeBehavior=convertToNull
+user = user001
+password = Gz1234567899!
+
+host = http://www.flowermm.net/manage/iframe/proxy/index
+hostbbs = http://bbs.flowermm.net
+getTokenUrl=http://www.flowermm.net/manage/iframe/proxy/getToken
+
+
+
+#花美美服务号的配置
+token = weixin
+encryptMessage = false
+
+appId = wx8d159d0220b67384
+appSecret = f7abb78c914e25fc70d4c0c8ca048bc9
+encodingAesKey = nPRjhdOELYSxo9sWUMgNZOjLA47Z2DEAGe04IivJIz7
+mchId = 1403445202
+key = QHBBo65QoS63muFFulaDfFL2p2zaynlG
+
+webAppId=wx7ab146a5e5933bcc
+webAppSecret=822a79350b7646e07f3b6270b3ebec22
+
+#证书地址，用于发红包、退款、提现等
+certPath=/usr/local/flower/image/cert/apiclient_cert.p12
+
+
+
+
+
+
+
+#门对门网络科技服务号的配置,这也是无奈之举
+#token = d2d870110
+#encryptMessage = false
+
+#appId = wx8a8c626f74855de7
+#appSecret = 9a2172cd62cbf9d1777b26d10a8eb2d5
+#encodingAesKey = vQUy6xsbQpuhHQEeYdF58s9cecVapojmrHKF8dZK8vl
+

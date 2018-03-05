@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="stylesheet" type="text/css" href="/resource/H-ui.admin_v2.5/lib/Hui-iconfont/1.0.7/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="/resource/css/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet prefetch" href="/resource/css/photoswipe.css">
+		<link rel="stylesheet prefetch" href="/resource/css/default-skin/default-skin.css">
+		<script src="/resource/js/jquery-3.1.1.min.js"></script>
+		<script src="/resource/js/photoswipe.min.js"></script>
+		<script src="/resource/js/photoswipe-ui-default.min.js"></script>
+		<script src="/resource/js/jqthumb.min.js"></script>
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<script src="/resource/js/weixin/wxjs.js" type="text/javascript" charset="utf-8"></script>
+		
+		<!-- twemoji -->
+		<script src="https://cdn.bootcss.com/twemoji/2.5.0/2/twemoji.min.js"></script>
+		<title>${topic.title!}</title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background-color: #f3f3f3;
+		}
+		p{
+			margin: 0;
+			padding: 0;
+		}
+		.container{
+			max-width: 768px;
+			padding: 0;
+		}
+		.top{
+	 		text-align: center;
+	 		padding: 6%;
+    		background-color: #fff;
+    		margin-bottom: 3vw;
+		 }
+		 .top p{
+		 	margin-bottom: 4%;
+		 }
+		 .top .p1{
+		 	font-size: 1.2em;
+		 }
+		 .top .p2{
+		 	color: #abaaaa;
+		 }
+		 .top .p3{
+		 	text-decoration: none;
+		 }
+		 .top .p3 span{
+	 	    font-size: 12px;
+	 	    border: 1px solid #ff3366; 
+	 	    border-radius: 5px;
+	 	    padding: 5px 13px;
+		 }
+		.main{
+			background-color: #f3f3f3;
+			margin-bottom: 60px;
+		}
+		.one{
+			background-color: #fff;
+			padding: 3vw;
+		}
+		.span{
+			color: #f54967;
+			font-size: 13px;
+		}
+		.focusbtn{
+			border: 1px solid #f54967;
+			color: #f54967;
+			border-radius: 5px;
+			text-align: center;
+			font-size: 13px;
+			padding-top: 0.4%;
+		}
+		.focusbtn.on{
+			background-color: #f54967;
+			color: #fff;
+		}
+		.two{
+			background-color: #fff;
+			margin-bottom: 3vw;
+			padding: 3vw;
+		}
+		.headimg{
+			display: inline-block;
+			margin: 1%;
+		    width: 9vw;
+		}
+		.headimg img{
+			display: inline-block;
+			border-radius: 100%;
+		    width: 9vw;
+		    height: 9vw;
+		    vertical-align: middle;
+		}
+		.nick{
+		    display: inline-block;
+		    vertical-align: middle;
+		    font-size: 13px;
+		}
+		.ctime{
+			color: #ccc;
+			font-size: 12px;
+		}
+		.content{
+			margin: 1%;
+			font-size: 13px;
+			overflow: hidden;
+		    text-overflow: ellipsis;
+		    display: -webkit-inline-box;
+		    -webkit-line-clamp: 3;
+		    -webkit-box-orient: vertical;
+			vertical-align: middle;
+		}
+		.main_show_body .content b{
+			vertical-align: middle;
+		}
+		.content .title{
+			font-size: 13px;
+			color: #f1a91b;
+		}
+		.finger_headimg{
+			width: 72vw;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    display: inline-block;
+		    margin: 1%;
+		    vertical-align: middle;
+		}
+		.finger_headimg img{
+			display: inline-block;
+			border-radius: 100%;
+		    width: 7vw;
+		    height: 7vw;
+		    vertical-align: middle;
+		}
+		.grade{
+			border: 1px solid #50d2c2; 
+	    	border-radius: 5px;
+	    	padding: 0px 2px;
+		    color: #50d2c2;
+		    margin:0 5px;
+		    font-size: 0.5em;
+		}
+		.icon{
+			overflow: hidden;
+			margin: 10px 0;
+		}
+		.icon .span1,.icon .span2{
+			display: inline-block;
+			vertical-align: middle;
+		    padding: 0 3vw;
+		}
+		.icon .span1.on{
+			color: #f55500;
+		}
+		.icon img{
+			width: 20px;
+    		vertical-align: middle;
+		}
+		.icon span{
+			width: 30%;
+		}
+		.main_show_body .content{
+			margin: 1%;
+			overflow: hidden;
+		    text-overflow: ellipsis;
+		    display: -webkit-inline-box;
+		    -webkit-line-clamp: 3;
+		    -webkit-box-orient: vertical;
+		    vertical-align: middle;
+		}
+		.main_show_body .content b{
+			vertical-align: middle;
+		}
+		.main_show_bottom{
+			background-color: #f9f9f9;
+			padding: 1% 4%;
+			font-size: 0.9em;
+		}
+		.main_show_bottom .com_con{
+			font-size: 1.1em;
+		}
+	   .element{
+			margin: auto;
+		}
+		.element:after { 
+			content: ''; 
+			display: table; 
+			clear: both;
+		}
+		.element figure { 
+			float: left; 
+			display: inline;
+			margin: 4px;
+		}
+		.element img{
+		    position: relative;
+		    width: 100%;
+		    height: 0;
+		    overflow: hidden;
+		    margin: 0;
+		    padding-bottom: 100%;
+		    background-position: center;
+		    background-repeat: no-repeat;
+		    background-size: cover;
+		}
+		
+		/* 渲染emoji */
+		.emoji-list{
+			padding:0;
+			margin:0;
+			list-style:none;
+			display:inline-block;
+			overflow: hidden;
+		    text-overflow: ellipsis;
+		    display: -webkit-inline-box;
+		    -webkit-line-clamp: 3;
+		    -webkit-box-orient: vertical;
+		    vertical-align: middle;
+		}
+		
+		/* 渲染emoji */
+		.emoji-list li{
+			font-size: 20px;
+			display:inline-block;
+			vertical-align: middle;
+		}
+		img.emoji {
+		      font-size: 20px !important;
+		      cursor: pointer;
+		      height: 1em;
+		      width: 1em;
+		      margin: 0 .05em 0 .1em;
+		     /*  vertical-align: -0.1em; */
+		 }
+		 i{
+	    	font-size: 20px;
+	    }
+	    .main_show_part{
+	    	background-color: #fff;
+		    margin-bottom: 3vw;
+		    padding: 3vw;
+	    }
+	    .icon_editor{
+			position: fixed;
+			bottom: 5%;
+			right: 3%;
+			border: 2px solid #f796a3;
+		    border-radius: 100%;
+		    width: 50px;
+		    height: 50px;
+		    background-color: #f9f9f9;;
+		}
+		.icon_editor img{
+			width: 100%;
+		}
+		.load{
+			text-align: center;
+			margin: 20px 0;
+		}
+		
+	    .gray_bg {
+		    width: 100%;
+		    min-height: 100%;
+		    background-color: rgba(93, 92, 92, 0.7);
+		    position: fixed;
+		    left: 0;
+		    top: 0;
+		    z-index: 2;
+		}
+		.float-page .wrap {
+			width:220px;
+			border: 1px solid #d7d7d7;
+			position:fixed;
+			left:50%;
+			top:50%;
+			transform:translate(-50%,-50%);
+			-webkit-transform:translate(-50%,-50%);
+			background:#f5f5f5;
+			border-radius:3px;
+			z-index:1000;
+			box-shadow: 1px 5px 20px rgba(0, 0, 0, 0.07);
+			padding: 30px 20px 30px;
+		}
+		.float-page .wrap .close{
+			position:absolute;
+			right:0px;
+			top:0px;
+			width:30px;
+			height:30px;
+			cursor:pointer; 
+			opacity: initial;
+		}
+		.float-page .wrap .close:hover{
+			filter:alpha(opacity=70); -moz-opacity:0.7; -khtml-opacity: 0.7; opacity: 0.7;
+		}
+		.floatbox{
+			text-align: center;
+		}
+		.floatbox img{
+			width: 30%;
+			border-radius: 100%;
+		}
+		.float-page	.pMoney{
+			margin: 3% 0 10%;
+	   		font-size: 20px;
+			margin-left: 8%;
+		}
+		.float-page	.pMoney span{
+			font-size: 0.8em;
+		}
+		.floatbox{
+			text-align: center;
+		}
+		.floatbox input{
+			border: none;
+			color: #50d2c2;
+			background-color: #f5f5f5;
+			width: 35%;
+			font-size: 1.5em;
+		}
+		.floatbox .shang{
+			color: #fff;
+			background-color: #e26860;
+			border-radius: 20px;
+			padding: 2% 35%;
+			font-size: 2em;
+		}
+		.floatbox input:-moz-placeholder { 
+			color: #50d2c2;
+		}
+		.floatbox input::-moz-placeholder {
+			color: #50d2c2;
+		}
+		input:-ms-input-placeholder,
+		{
+			color: #50d2c2;
+		}
+		input::-webkit-input-placeholder{
+			color: #50d2c2;
+		}
+	    
+	</style>
+	<body>
+		<div class="gray_bg" style="display: none;"></div>
+		<div class="container">
+			<div class="main">
+				<div class="top">
+					<p class="p1"><b>#${topic.title!}#</b></p>
+					<p class="p2">${topic.des!}</p>
+					<p class="p3">
+						<#if state==1><span class="focusbtn on">已关注话题</span>
+						<#elseif state==0><span class="focusbtn"> + 关注话题</span>
+						</#if>
+				</div>
+				
+				<#if details?? && (details?size > 0)>
+					<#list details as detail>
+					<div class="main_show_part">		
+						<div class="">
+							<div class="headimg"><img src="${detail.headimg!}"/></div>
+							<div class="nick">${detail.nick!}<span><span class="grade">${detail.grade!}</span><br><span class="ctime">${detail.ctime!}</span></span></div>
+						</div>
+						<span class="content" onclick="location.href='/detail/${detail.id!}'">
+							<span class="title"><#if topic.title ??>#${topic.title!}#</#if></span>${detail.content!}
+						</span>
+						<div class="element">
+							<#if detail.img01 ??>
+								<figure>
+									<img src="${detail.img01!}" style="background-image:url(${detail.img01!})"/>
+								</figure>
+							</#if>
+							<#if detail.img02 ??>
+								<figure>
+									<img src="${detail.img02!}" style="background-image:url(${detail.img02!})"/>
+								</figure>
+							</#if>
+							<#if detail.img03 ??>
+								<figure>
+									<img src="${detail.img03!}" style="background-image:url(${detail.img03!})"/>
+								</figure>
+							</#if>
+							<#if detail.img04 ??>
+								<figure>
+									<img src="${detail.img04!}" style="background-image:url(${detail.img04!})"/>
+								</figure>
+							</#if>
+							<#if detail.img05 ??>
+								<figure>
+									<img src="${detail.img05!}" style="background-image:url(${detail.img05!})"/>
+								</figure>
+							</#if>
+							<#if detail.img06 ??>
+								<figure>
+									<img src="${detail.img06!}" style="background-image:url(${detail.img06!})"/>
+								</figure>
+							</#if>
+							<#if detail.img07 ??>
+								<figure>
+									<img src="${detail.img07!}" style="background-image:url(${detail.img07!})"/>
+								</figure>
+							</#if>
+							<#if detail.img08 ??>
+								<figure>
+									<img src="${detail.img08!}" style="background-image:url(${detail.img08!})"/>
+								</figure>
+							</#if>
+							<#if detail.img09 ??>
+								<figure>
+									<img src="${detail.img09!}" style="background-image:url(${detail.img09!})"/>
+								</figure>
+							</#if>
+						</div>
+						<div class="icon">
+							<#if detail.num==1>
+								<span class="span1 on">
+									<i class="Hui-iconfont zanicon" data-id="${detail.id!}">&#xe66d;</i> 
+									<span>赞</span>
+								</span>
+							<#elseif detail.num==0>
+								<span class="span1">
+									<i class="Hui-iconfont zanicon" data-id="${detail.id!}">&#xe697;</i> 
+									<span>赞</span>
+								</span>
+							</#if>
+							<span class="span2" data-id="${detail.id!}" onclick="location.href='/detail/${detail.id!}'"><i class="Hui-iconfont">&#xe686;</i> 评论</span>							
+							<span class="span3 btn_float" data-id="${detail.id!}" data-headimg="${detail.headimg!}"><img src="/resource/image/index/icon/dashang.png"/> 打赏</span>
+						</div>
+						<div class="main_show_bottom">
+							<p><i class="Hui-iconfont zanicon">&#xe697;</i><span class="zannum"></span> ${detail.fingerNum!}人觉得很赞</p>
+							<p class="icon"><img src="/resource/image/index/icon/dashang.png"/> ${detail.fingerNum!}人打赏了</p>
+							<#if detail.commentNum gt 0>
+								<p style="color: #50d2c2;" onclick="location.href='/detail/${detail.id!}'">查看所有${detail.commentNum!}条评论</p>
+							</#if>
+							<#if comlist?? && (comlist?size > 0)>
+							<#assign index=0/>
+								<#list comlist as com>
+									<#if com.postId==detail.id && index lte 1>
+										<#assign index=index +1/>
+										<div class="com_con"><span class="com_nick"><b>${com.nick!}：</b></span>${com.comStr!}</div>
+									</#if>
+								</#list>
+							</#if>
+						</div>
+					</div>
+					</#list>
+						<p class="load" data-time="0">加载更多</p>
+					<#else>
+						<p style="text-align: center;">
+							<span style="font-size:14px;color:#fe6a80">很遗憾 -- ，没有数据..</span>
+						</p>	
+				</#if>
+			</div>
+			
+			<div class="icon_editor" onclick="location.href='/editor'"> 
+		        <img src="/resource/image/index/icon/photo_editor.png"/>
+	      	</div>
+			
+		</div>
+		
+		<section class="float-page" style="display: none;">
+	        <div class="wrap">
+	            <img src="/resource/image/index/icon/close.png" alt="" class="close">
+		        <div class="floatbox">
+	        		<img src="">
+	        		<p>打赏金额</p>
+	        		<p class="pMoney"><span>￥</span><input type="text" id="money" name="money" placeholder="0.68"/></p>			    
+				    <span class="shang">赏</span>
+		        </div>
+	        </div>
+      	</section>
+      	
+      	<form action="/createOrder" method="post" style="display: none;">
+			<input type="hidden" name="postId"/>
+			<input type="hidden" name="tipMoney"/>
+		</form>
+		
+	<script type="text/javascript">
+		// 渲染emoji
+		  $(function(){
+			$("ul").each(function(){
+			  twemoji.parse(this, {"size":72});
+			});
+		});
+	
+		$(function(){
+			wxconfig(window.location);
+			wx.ready(function(){
+				/* 分享到朋友圈  */
+				wx.onMenuShareTimeline({
+					title: '美美社区',
+					link: 'http://'+window.location.host+window.location.pathname,
+					imgUrl:'http://'+window.location.host+'/resource/image/index/icon/icon_share.png'
+				});
+				/* 分享给好友  */
+				wx.onMenuShareAppMessage({
+					title: '美美社区',
+				    desc: '有花来嗮嗮，没花来看看', // 分享描述
+				    link: 'http://'+window.location.host+window.location.pathname, // 分享链接
+				    imgUrl: 'http://'+window.location.host+'/resource/image/index/icon/icon_share.png', // 分享图标
+				    type: 'link', // 分享类型,music、video或link，不填默认为link
+				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+				    success: function () {
+				        // 用户确认分享后执行的回调函数
+				    },
+				    cancel: function () {
+				        // 用户取消分享后执行的回调函数
+				    }
+				});
+			});
+			
+			$(".element img").bind("click",function(){
+		        var curImageSrc = $(this).attr('src');
+		        var imgArray = [];
+		        var oParent = $(this).parent().parent();
+		        oParent.find('img').each(function(index, el) {
+	                var itemSrc = $(this).attr('src');
+	                imgArray.push(itemSrc);
+	            });
+	            wx.previewImage({
+	                current: curImageSrc,
+	                urls: imgArray
+	            });
+	        })
+			$(".element").each(function(){
+				var w=window.screen.width;
+				if(w<480){
+					if($(this).find("figure").length==1){
+						var n=300/(1-(w-320)/w)-300;
+						$(this).find("figure").css({
+							"width": function(index, value) {return 200+n;},
+							"height": function(index, value) {return 200+n;}
+						});
+					}else if($(this).find("figure").length==2||$(this).find("figure").length==4){
+						var n=150/(1-(w-320)/w)-150;
+						$(this).find("figure").css({
+							"width": function(index, value) {return 142+n;},
+							"height": function(index, value) {return 142+n;}
+						});
+					}else{
+						var n=98/(1-(w-320)/w)-98;
+						$(this).find("figure").css({
+							"width": function(index, value) {return 92+n;},
+							"height": function(index, value) {return 92+n;}
+						});
+					}
+				}else{
+					$('.element figure').css({
+						"width": function() {return 160;},
+						"height": function() {return 160;}
+					});
+				}
+			});
+			
+			$(".focusbtn").click(function() {
+				var themeId=${topic.id!};
+				var focusNum=parseInt($(".focusNum").html());
+				var that=this;
+				if($(that).hasClass("on")){
+					$.post('/cancelFocus/'+themeId, function(data){
+						$(".focusNum").html(focusNum-1);
+						$(that).html("+ 关注话题");
+						$(that).removeClass("on");
+		    		})
+				}else{
+		    		$.post('/saveFocus/'+themeId, function(data){
+						$(".focusNum").html(focusNum+1);
+						$(that).html("已关注话题");
+						$(that).addClass("on");
+		    		})
+				}
+			})
+			
+			$(".zanicon").click(function() {
+				var that=this;
+				var zannum=$(this).parents(".main_show_part").find(".zannum").html();
+				var postId=$(that).attr("data-id");
+				if($(that).parent().hasClass("on")){
+				}else{
+		    		$.post('/submitFinger/'+postId, function(data){
+		    			zannum++;
+						$(that).parent().addClass("on");
+						$(that).html("&#xe66d;")
+						$(that).parents(".main_show_part").find(".zannum").html(zannum);
+		    		})
+				}
+			})
+			
+			$(".btn_float").click(function() {
+	    		$(".gray_bg,.float-page").show();
+	    		var that=this;
+	    		var imgurl=$(that).attr("data-headimg");
+	    		$(".floatbox img").attr('src',imgurl);
+	    		$(".shang").click(function() {
+					var postId=$(that).attr("data-id");
+					var tipMoney=$('#money').val();
+					if($.trim(tipMoney)==''){
+						tipMoney=0.68;
+					}
+					$('input[name="postId"]').val(postId);
+					$('input[name="tipMoney"]').val(tipMoney);
+					$('form').submit();
+				}) 
+		   	}); 
+		   	$(".float-page .close").click(function() {
+		        $(".gray_bg,.float-page").hide();
+		   	});
+			
+		})
+	</script>
+	
+	<!-- 加载更多 -->
+		<script>
+			$(".load").click(function(){
+				var num=$(this).attr("data-time");
+				num++;
+				$(this).attr("data-time",num);
+				var parentId=$(this).parent(".main_show").attr("id"); 
+				var that=$(this);
+				var key=null;
+				
+				//后台搜索并加载更多帖子
+				$.ajax({
+			        type : "post",
+			        url : "/load",
+			        data:{
+			        	num:num,
+			        	parentId:parentId,
+			        	key:key
+			        },
+			        dataType : "json",
+			        async : false,
+			        success : function(data) {
+			        	if(data.flat){
+			        		
+			        		var list = data.searchList;
+			        		var i = 0;
+			        		var html = null;
+			        		
+			        		for(i in list){
+			        			//console.log(list[i])
+			        			
+			        			var img = "";
+			        				
+			        			if( list[i].img01 != null )
+		        				img += '	<figure><img src="'+ list[i].img01 +'" style="background-image:url('+list[i].img01 +'")/></figure>'
+		        				if( list[i].img02 != null )
+	        					img += '	<figure><img src="'+ list[i].img02 +'" style="background-image:url('+list[i].img02 +'")/></figure>'
+	        					if( list[i].img03 != null )
+	        					img += '	<figure><img src="'+ list[i].img03 +'" style="background-image:url('+list[i].img03 +'")/></figure>'
+	        					if( list[i].img04 != null )
+	        					img += '	<figure><img src="'+ list[i].img04 +'" style="background-image:url('+list[i].img04 +'")"/></figure>'
+	        					if( list[i].img05 != null )
+	        					img += '	<figure><img src="'+ list[i].img05 +'" style="background-image:url('+list[i].img05 +'")/></figure>'
+	        					if( list[i].img06 != null )
+	        					img += '	<figure><img src="'+ list[i].img06 +'" style="background-image:url('+list[i].img06 +'")/></figure>'
+	        					if( list[i].img07 != null )
+	        					img += '	<figure><img src="'+ list[i].img07 +'" style="background-image:url('+list[i].img07 +'")/></figure>'
+	        					if( list[i].img08 != null )
+	        					img += '	<figure><img src="'+ list[i].img08 +'" style="background-image:url('+list[i].img08 +'")/></figure>'
+	        					if( list[i].img09 != null )
+	        					img += '	<figure><img src="'+ list[i].img09 +'" style="background-image:url('+list[i].img09 +'")/></figure>'
+			        			
+	        					var title = "";
+	        					if( list[i].title != null ){
+	        						title += '<b style="font-weight:400;color: #f1a91b;">#'+ list[i].title +'#</b>'+list[i].content
+	        					}else{
+	        						title += list[i].content
+	        					}
+	        					
+	        					var span2 = "";
+	        					if( list[i].num==1){
+	        						span2 += '<span class="span2 on">'
+				        					+'     <i class="Hui-iconfont zanicon" data-id="'+list[i].id+'">&#xe66d;</i> '
+				        					+'     <span class="zannum">'+list[i].fingerNum+'</span>'
+				        					+' </span>'
+	        					}else if( list[i].num==0){
+	        						span2 += '<span class="span2">'
+						        			+'     <i class="Hui-iconfont zanicon" data-id="'+list[i].id+'">&#xe697;</i> '
+						        			+'     <span class="zannum">'+list[i].fingerNum+'</span>'
+					        				+'</span>'
+	        					}
+			        			
+			        			html = ''
+					        		+'	<div class="main_show_part">'
+					        		+'	<div class="main_show_top" style=" display: flex; justify-content: space-between;align-items: center;padding-top:10px ;">'
+					        		+'		<span class="head_span">'
+					        		+'			<span style="display: inline-block;vertical-align: middle;">'
+					        		+'				<img style="width: 30px;height: 30px" src="'+ list[i].headimg +'"/>'
+					        		+'			</span>'
+					        		+'			<span style="display: inline-block;vertical-align: middle;">'
+					        		+'				<span style="font-size: 0.5em;">'+ list[i].nick +'</span><span style="font-size: 0.5em;color: #f76565;"> Lv.'+ list[i].grade +'</span><br/>'
+					        		+'				<span style="font-size: 0.5em;color: #d1d1d1;">'+ list[i].ctime +'</span>'
+					        		+'			</span>'
+					        		+'		</span>'
+					        		+'		<span id=""><img src="/resource/image/index/icon/icon_tuijian.png" style="width: 36px;height: 18px;"/></span>'
+					        		+'	</div>'
+					        			
+					        		+'	<div class="main_show_body">'
+					        		+'		<span class="content" onclick="location.href=\'/detail/'+ list[i].id +'\'">'
+					        		+ title
+					        		+'		</span>'
+					        		+'		<div class="element"> '
+
+									+ img			        				
+					        					
+					        		+'		</div>'
+					        		
+					        		+'     <div class="icon">'
+					        		+'       	<span class="span1" data-type="'+list[i].id+'" onclick="location.href=\'/detail/'+list[i].id+'\'"><i class="Hui-iconfont">&#xe686;</i> '+list[i].commentNum+'</span>'							
+					        		+ span2       	
+				        			+'     	</div>'
+					        		
+					        		+'	</div>'
+					        		+'	</div>'
+					        		
+			        		
+					        	$(that).parent(".main_show").children(".main_show_part").last().after(html)
+			        		}   
+			        		
+			        		$("ul").each(function(){
+			  				  twemoji.parse(this, {"size":72});
+			  				});
+			        		
+			        		$(".element img").bind("click",function(){
+			    		        var curImageSrc = $(this).attr('src');
+			    		        var imgArray = [];
+			    		        var oParent = $(this).parent().parent();
+			    		        oParent.find('img').each(function(index, el) {
+			    	                var itemSrc = $(this).attr('src');
+			    	                imgArray.push(itemSrc);
+			    	            });
+			    	            wx.previewImage({
+			    	                current: curImageSrc,
+			    	                urls: imgArray
+			    	            });
+			    	        })
+			    			$(".element").each(function(){
+								var w=window.screen.width;
+								if(w<480){
+									if($(this).find("figure").length==1){
+										var n=300/(1-(w-320)/w)-300;
+										$(this).find("figure").css({
+											"width": function(index, value) {return 200+n;},
+											"height": function(index, value) {return 200+n;}
+										});
+									}else if($(this).find("figure").length==2||$(this).find("figure").length==4){
+										var n=150/(1-(w-320)/w)-150;
+										$(this).find("figure").css({
+											"width": function(index, value) {return 142+n;},
+											"height": function(index, value) {return 142+n;}
+										});
+									}else{
+										var n=98/(1-(w-320)/w)-98;
+										$(this).find("figure").css({
+											"width": function(index, value) {return 92+n;},
+											"height": function(index, value) {return 92+n;}
+										});
+									}
+								}else{
+									$('.element figure').css({
+										"width": function() {return 160;},
+										"height": function() {return 160;}
+									});
+								}
+							});
+		        			
+			        		$(".zanicon").click(function() {
+			    				var zannum=$(this).parents(".main_show_part").find(".zannum").html();
+			    				var postId=$(this).attr("data-id");
+			    				if($(this).parent().hasClass("on")){
+			    				}else{
+			    					zannum++;
+			    					$(this).parent().addClass("on");
+			    					$(this).html("&#xe66d;")
+			    					$(this).parents(".main_show_part").find(".zannum").html(zannum);
+			    		    		$.post('/submitFinger/'+postId, function(data){
+			    		    		})
+			    				}
+			    			})
+			        	}else{
+			        		 layer.open({
+		        			    content: '没有更多帖子了'
+		        			    ,btn: '我知道了'
+		        			  });
+			        	}
+			        }
+			  });
+				
+		})
+		
+		</script>
+	
+	</body>
+</html>

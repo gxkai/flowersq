@@ -1,0 +1,34 @@
+#测试数据库配置
+jdbcUrl=jdbc:mysql://116.62.66.227:3306/homedb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+user=root
+password = 123456
+
+
+
+host = http://huameimei.d2dcloud.cn/porxy/index_Proxy
+hostbbs = http://huameimei.d2dcloud.cn
+getTokenUrl=http://huameimei.d2dcloud.cn/porxy/getToken
+
+token = weixin
+encryptMessage = false
+
+
+#e合作社测试服务号的配置
+appId = wxc9f48061a1aee1b6
+appSecret = 729aa571018985c214dcbfdfc6a28bad
+encodingAesKey = LkliFC5cIB55GdNMNYggSNagaTXlVsyhdF1xeSLVOkV
+
+mchId = 1297352301
+key = 42e77b63637ab381e8be5f8318cc28ax
+
+#证书地址，用于发红包、退款、提现等
+certPath=D:/upload/flower/image/cert/apiclient_cert.p12
+
+
+#门对门果园测试服务号的配置,两个ECS测试
+#appId = wx2e3ba08228a63904
+#appSecret = 083f7c0ef5a88b6f6b38c23ef554baa4
+#encodingAesKey = lA4rWoCyiuLhV40BwDB3V6Wjoez0CUpag0ofWdElEFs
+
+#mchId = 1244237602
+#key = 42e77b63637ab381e8be5f8318cc28ax

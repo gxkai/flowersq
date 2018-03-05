@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<meta name="format-detection" content="telephone=no" />
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<title>打赏支付</title>
+		
+		<script type="text/javascript">
+			$().ready(function(){
+				$.post('/weixin/configvalid', {'url':window.location.toString()}, function(data){
+					wx.config({
+					    debug: false,
+					    appId: data.appId,
+					    timestamp: data.timestamp,
+					    nonceStr: data.nonceStr,
+					    signature: data.signature,
+					    jsApiList: ['chooseWXPay']
+					});
+				});
+			});
+			wx.ready(function(){
+				wx.chooseWXPay({
+				    timestamp: '${payMap.timeStamp}',
+				    nonceStr: '${payMap.nonceStr}',
+				    package: '${payMap.package}',
+				    signType: 'MD5',
+				    paySign: '${payMap.paySign}',
+				    success: function () {
+				    	location.replace('/detail/'+'${postId!}');
+				    }
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<p><i>支付编号:</i>${mchBillno!}</p>
+	</body>
+</html>

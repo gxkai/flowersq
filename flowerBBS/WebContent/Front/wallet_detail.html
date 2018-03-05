@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>零钱明细</title>
+	</head>
+	<style>
+		body{
+			margin: 0;
+		}
+		.wallet{
+			padding: 3%;
+			border-bottom: 1px solid #ccc;
+		}
+		td{
+			width: 20%;
+		}
+	</style>
+
+<body>
+
+	<div class="container">
+		<#if walletlist?? && (walletlist?size > 0)>
+			<#list walletlist as wallet>
+				<div class="wallet">
+				<table>
+					<tr>
+						<td>
+							<#if wallet.type==11>
+								<b>帖子打赏</b>
+							<#elseif wallet.type==21>
+								<b>提现</b>
+							</#if>
+						</td>
+						<td rowspan="2">
+							<#if wallet.type==11 || wallet.type==12 >
+								<p class="content" style="text-align: right;">+${wallet.iMoney!}</p>
+							<#elseif wallet.type==21 || wallet.type==22 >
+								<p class="content" style="text-align: right;">-${wallet.iMoney!}</p>
+							</#if>
+						</td>
+					</tr>
+					<tr>
+						<td><span style="font-size: 0.7em">${wallet.cTime!}</span></td>
+					</tr>
+				</table>
+					
+				</div>
+			</#list>
+			<#else>
+			<p style="font-size:14px;color:#fe6a80;text-align: center;margin-top: 30px;"><span>很遗憾 -- ，没有零钱明细..</span></p>
+		</#if>
+	
+	</div>
+
+</body>
+</html>

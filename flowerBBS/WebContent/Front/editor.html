@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<script src="" type="text/javascript" charset="utf-8"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no;">
+		<link rel="stylesheet" type="text/css" href="/resource/H-ui.admin_v2.5/lib/Hui-iconfont/1.0.7/iconfont.css" />
+		<!-- jquery -->
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<!-- 测试环境 js -->
+		<!-- <script src="/resource/js/plupload/moxie.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/resource/js/plupload/plupload.dev.js" type="text/javascript" charset="utf-8"></script> -->
+		
+		<!-- weiui -->
+		<link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+		<link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+		
+		<!-- 上传组件 -->
+		<!-- <script src="/resource/js/upload_qiniu_editor.js" type="text/javascript" charset="utf-8"></script> -->
+		
+		<!-- 微信接口 -->
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<script src="/resource/js/weixin/wxjs.js" type="text/javascript" charset="utf-8"></script>
+		
+		<!-- twemoji -->
+		<script src="https://cdn.bootcss.com/twemoji/2.5.0/2/twemoji.min.js"></script>
+		<!-- icon -->
+		<link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+		<!-- layer -->
+		<script src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
+		<script src="/resource/js/jqthumb.min.js"></script>
+		
+		<title>发帖</title>
+		
+		<style>
+			body{
+				font-family:"微软雅黑";
+				background: #fff;
+				margin: 0 auto;
+				padding: 0;
+				max-width: 763px;
+			}
+			.container{
+				width:100%;
+			}
+			.div_text{
+				padding:5px;
+			}
+			
+			.img_div{
+				border:1px red solid;
+				display:flex;
+				flex-wrap: wrap;
+			}
+			
+			.upload_img{
+				border-radius:5px;
+				width:80px;
+				height:80px;
+				margin:2%;
+			}
+			
+			.btn_span{
+				width: 80%;
+				display:block;
+				line-height:34px;
+				height: 34px;
+				text-align: center;
+				background:#fe6a80;
+				color: #fff;
+				font-size: 13px;
+				border-radius: 3px;
+			 	margin:20px;
+			}
+			
+			@media screen and (max-device-width: 350px){
+				.weui-cell{
+					padding:0 10%;
+				}
+				.weui-uploader__hd{
+					padding:0;
+				}
+			}
+			
+		</style>
+		
+		<style>
+			.editor{
+				box-sizing: border-box;
+				margin-top:10px;
+				padding:5px;
+			}
+			
+			.text_box {
+				box-sizing: border-box;
+				
+			    width:100%;
+			    min-height: 120px; 
+			    max-height: 250px;
+			    _height: 120px; 
+			   
+			    outline: 0; 
+			    border: 1px solid #eee; 
+			    font-size: 12px; 
+			    word-wrap: break-word;
+			    overflow-x: hidden;
+			    overflow-y: auto;
+			    _overflow-y: visible;
+			    
+			    padding:5px;
+			}
+			
+			.two{
+				display: none;
+			}
+			.container{
+				max-width: 768px;
+				margin: auto;
+			}
+			.top{
+		 		margin: 6%;
+			 }
+			 .top span{
+			 	text-align: left;
+			 	position: absolute;
+			 	top: 3%;
+			 }
+			 .top p{
+		 	    font-size: 0.8em;
+		 	    text-align: center;
+			 }
+			 .top .p2{
+			 	color: #abaaaa;
+	    		font-size: 0.9em;
+			 }
+			 .top .p3{
+			 	text-decoration: none;
+			 }
+			 .top .p3 span{
+		 	    color: #ff3366;
+		 	    font-size: 12px;
+		 	    border: 1px solid #ff3366; 
+		 	    border-radius: 5px;
+		 	    padding: 3px 22px;
+			 }
+			 .topiclist{
+				border-bottom: 1px solid #ccc;
+				padding: 3vw 4vw;
+			}
+			.topiclist:FIRST-CHILD{
+				border-top: 1px solid #ccc;
+			}
+			.topiclist.on{
+				background-color: #eaf7f5;
+			}
+			.img{
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: 4vw;
+			    border-radius: 100%;
+	    		overflow: hidden;
+			}
+			.img img{
+				width: 100%;
+			}
+			.topic{
+				display: inline-block;
+				width: 62%; 
+				vertical-align: middle;
+			}
+			.content{
+				font-size: 14px;
+			    -webkit-line-clamp: 3;
+				display:-moz-box;
+				-moz-box-orient:vertical;
+				display:-webkit-box;
+				-webkit-box-orient:vertical;
+				display:box;
+				box-orient:vertical;
+			    overflow:hidden; 
+			    line-height: 18px;
+			    margin: 2vw 0;
+			    color: #000;
+			}
+			
+			@media screen and (min-width: 900px) {
+				.img{
+					margin-right: 3vw;
+				}
+				.topic{
+					width: 70%; 
+				}
+			}
+			.title{
+				font-size: 16px;
+			}
+			.num{
+				font-size: 13px;
+				color: #ccc;
+			}
+			
+		</style>
+		
+		<!-- 表情 -->
+		 <style>
+		 	.txt_box_div{
+		 		clear:both;
+		 		width:100%;
+		 		border-bottom: 1px solid #d9d9d9;
+		 	}
+		 	#txt_box{
+			    background-color:transparent;  
+			    /*scrollbar-arrow-color:yellow;  
+			    scrollbar-base-color:lightsalmon;  
+			    overflow: hidden;*/  
+			    color: #666464;  
+			    width:98%;
+			    height: 100px;  
+			    outline: none;
+			    resize:none;
+			    display:block;
+			    margin:0 auto;
+			    overflow: hidden;
+			    box-sizing: border-box;
+			    padding:5px;
+			}
+		 
+		    .emoji-list{
+				padding:0;
+				margin:0;
+				list-style:none;
+				display:inline-block;
+			}
+			.emoji-list li{
+				font-size: 16px;
+				display:inline-block;
+			}
+			img.emoji {
+			      cursor: pointer;
+			      height: 1em;
+			      width: 1em;
+			      margin: 0 .05em 0 .1em;
+			      vertical-align: -0.1em;
+			 }
+		    i{
+		    	font-size: 20px;
+		    }
+		    
+		    </style>
+	</head>
+	<body>
+	<div class="container">
+	<div class="one">
+
+	<div class="txt_box_div">
+		<textarea id="txt_box" style="border:none">写点想法吧...</textarea>
+	</div>
+	<div style="margin:5px;">
+	<i class="ion-happy-outline" onclick="show_simle()"></i>
+    <i class="ion-android-favorite-outline" onclick="show_other()"></i>
+    </div>
+    <ul class="emoji-list" id="emoji-1" style="display: none;">
+      <!-- 表情 -->
+      <li>&#x1F600;</li>
+      <li>&#x1F601;</li>
+      <li>&#x1F602;</li>
+      <li>&#x1F603;</li>
+      <li>&#x1F604;</li>
+      <li>&#x1F605;</li>
+      <li>&#x1F606;</li>
+      <li>&#x1F607;</li>
+      <li>&#x1F608;</li>
+      <li>&#x1F609;</li>
+      <li>&#x1F60A;</li>
+      <li>&#x1F60B;</li>
+      <li>&#x1F60C;</li>
+      <li>&#x1F60D;</li>
+      <li>&#x1F60E;</li>
+      <li>&#x1F60F;</li>
+      <li>&#x1F610;</li>
+      <li>&#x1F611;</li>
+      <li>&#x1F612;</li>
+      <li>&#x1F613;</li>
+      <li>&#x1F614;</li>
+      <li>&#x1F615;</li>
+      <li>&#x1F616;</li>
+      <li>&#x1F617;</li>
+      <li>&#x1F618;</li>
+      <li>&#x1F619;</li>
+      <li>&#x1F61A;</li>
+      <li>&#x1F61B;</li>
+      <li>&#x1F61C;</li>
+      <li>&#x1F61D;</li>
+      <li>&#x1F61E;</li>
+      <li>&#x1F61F;</li>
+      <li>&#x1F620;</li>
+      <li>&#x1F621;</li>
+      <li>&#x1F622;</li>
+      <li>&#x1F623;</li>
+      <li>&#x1F624;</li>
+      <li>&#x1F625;</li>
+      <li>&#x1F626;</li>
+      <li>&#x1F627;</li>
+      <li>&#x1F628;</li>
+      <li>&#x1F629;</li>
+      <li>&#x1F62A;</li>
+      <li>&#x1F62B;</li>
+      <li>&#x1F62C;</li>
+      <li>&#x1F62D;</li>
+      <li>&#x1F62E;</li>
+      <li>&#x1F62F;</li>
+      <li>&#x1F630;</li>
+      <li>&#x1F631;</li>
+      <li>&#x1F632;</li>
+      <li>&#x1F633;</li>
+      <li>&#x1F634;</li>
+      <li>&#x1F635;</li>
+      <li>&#x1F636;</li>
+      <li>&#x1F637;</li>
+      <li>&#x1F638;</li>
+      <li>&#x1F639;</li>
+      <li>&#x1F63A;</li>
+      <li>&#x1F63B;</li>
+      <li>&#x1F63C;</li>
+      <li>&#x1F63D;</li>
+      <li>&#x1F63E;</li>
+      <li>&#x1F63F;</li>
+      <li>&#x1F640;</li>
+      <li>&#x1F641;</li>
+      <li>&#x1F642;</li>
+      <li>&#x1F643;</li>
+      <li>&#x1F644;</li>
+      <li>&#x1F927;</li>
+      <li>&#x1F928;</li>
+      <li>&#x1F929;</li>
+      <li>&#x1F92A;</li>
+      <li>&#x1F92B;</li>
+      <li>&#x1F92C;</li>
+      <li>&#x1F92D;</li>
+      <li>&#x1F92E;</li>
+      <li>&#x2639;</li>
+      <li>&#x263A;</li>
+    </ul>
+    <ul class="emoji-list" id="emoji-2" style="display: none;">
+    	<!--食物-->
+      <li>&#x1F31E;</li>
+      <li>&#x1F31F;</li>
+      <li>&#x1F320;</li>
+      <li>&#x1F321;</li>
+      <li>&#x1F324;</li>
+      <li>&#x1F325;</li>
+      <li>&#x1F326;</li>
+
+      <li>&#x1F327;</li>
+      <li>&#x1F328;</li>
+      <li>&#x1F329;</li>
+      <li>&#x1F32A;</li>
+      <li>&#x1F32B;</li>
+      <li>&#x1F32C;</li>
+      <li>&#x1F32D;</li>
+      <li>&#x1F32E;</li>
+      <li>&#x1F32F;</li>
+      <li>&#x1F330;</li>
+      <li>&#x1F331;</li>
+      <li>&#x1F332;</li>
+      <li>&#x1F333;</li>
+      <li>&#x1F334;</li>
+      <li>&#x1F335;</li>
+      <li>&#x1F336;</li>
+      <li>&#x1F337;</li>
+      <li>&#x1F338;</li>
+      <li>&#x1F339;</li>
+      <li>&#x1F33A;</li>
+      <li>&#x1F33B;</li>
+      <li>&#x1F33C;</li>
+      <li>&#x1F33D;</li>
+      <li>&#x1F33E;</li>
+      <li>&#x1F33F;</li>
+      <li>&#x1F340;</li>
+      <li>&#x1F341;</li>
+      <li>&#x1F342;</li>
+      <li>&#x1F343;</li>
+      <li>&#x1F344;</li>
+      <li>&#x1F345;</li>
+      <li>&#x1F346;</li>
+      <li>&#x1F347;</li>
+      <li>&#x1F348;</li>
+      <li>&#x1F349;</li>
+      <li>&#x1F34A;</li>
+      <li>&#x1F34B;</li>
+      <li>&#x1F34C;</li>
+      <li>&#x1F34D;</li>
+      <li>&#x1F34E;</li>
+      <li>&#x1F34F;</li>
+      <li>&#x1F350;</li>
+      <li>&#x1F351;</li>
+      <li>&#x1F352;</li>
+      <li>&#x1F353;</li>
+      <li>&#x1F354;</li>
+      <li>&#x1F355;</li>
+      <li>&#x1F356;</li>
+      <li>&#x1F357;</li>
+      <li>&#x1F358;</li>
+      <li>&#x1F359;</li>
+      <li>&#x1F35A;</li>
+      <li>&#x1F35B;</li>
+      <li>&#x1F35C;</li>
+      <li>&#x1F35D;</li>
+      <li>&#x1F35E;</li>
+      <li>&#x1F35F;</li>
+      <li>&#x1F360;</li>
+      <li>&#x1F361;</li>
+      <li>&#x1F362;</li>
+      <li>&#x1F363;</li>
+      <li>&#x1F364;</li>
+      <li>&#x1F365;</li>
+      <li>&#x1F366;</li>
+      <li>&#x1F367;</li>
+      <li>&#x1F368;</li>
+      <li>&#x1F369;</li>
+      <li>&#x1F36A;</li>
+      <li>&#x1F36B;</li>
+      <li>&#x1F36C;</li>
+      <li>&#x1F36D;</li>
+      <li>&#x1F36E;</li>
+      <li>&#x1F36F;</li>
+      <li>&#x1F370;</li>
+      <li>&#x1F371;</li>
+      <li>&#x1F372;</li>
+      <li>&#x1F373;</li>
+      <li>&#x1F374;</li>
+      <li>&#x1F375;</li>
+      <li>&#x1F376;</li>
+     
+      
+      <!--其他-->
+      <li>&#x2764;</li>
+    </ul>
+    
+    <!--选择表情 -->
+    <script>
+    	function show_simle(){
+    		$('#emoji-2').hide();
+    		$('.ion-android-favorite-outline').css("color","black")
+    		
+    		$('#emoji-1').show();
+    		$('.ion-happy-outline').css("color","dodgerblue")
+    	}
+    	function show_other(){
+    		$('#emoji-1').hide();
+    		$('.ion-happy-outline').css("color","black");
+    		
+    		$('#emoji-2').show();
+    		$('.ion-android-favorite-outline').css("color","dodgerblue")
+    		
+    	}
+    </script>
+    
+    <script>
+	    var ul = document.getElementsByTagName('ul')[0];
+	    var total = ul.getElementsByTagName('li').length;
+	    var elapsed = +new Date;
+	    twemoji.parse(ul, {"size":72}); 
+	    
+	    ul = document.getElementsByTagName('ul')[1];
+	    twemoji.parse(ul, {"size":72});
+	    elapsed = (+new Date) - elapsed; 
+	
+	 	(function (img, metaKey, i) {
+	      function clickImg(e) { 
+	       em = re(this.src)
+	       //console.log(em)
+	       
+	       var txt_content = $('#txt_box').val().replace("写点想法吧...","").trim()
+	       
+	       console.log("before：",txt_content)
+	       //添加表情
+	       txt_content = txt_content + "[:"+em+"]"
+	       $('#txt_box').val(txt_content)
+	       console.log("after:",txt_content)  
+	      }
+	      for (i = 0; i < img.length; img[i++].onclick = clickImg) {}
+	    }(
+	      document.getElementsByTagName('img'),
+	      /\b(?:Mac |i)OS\b/i.test(navigator.userAgent) ? 'Command' : 'Ctrl'
+	    ));
+			
+		//过滤
+		function re(text){
+			text = text.replace("https://twemoji.maxcdn.com/2/72x72/","")
+			text = text.replace(".png","")
+			return text;
+		}
+	
+	    </script>
+		
+		<script type="text/javascript">
+			$(function(){
+				$("#txt_box").bind("focus", function () {
+					var text = $("#txt_box").val()
+					
+					if(text.trim() === "写点想法吧..."){
+						 $("#txt_box").val("")
+					}
+			    });
+				
+				$("#txt_box").blur(function(){
+			        var text = $("#txt_box").val()
+			        
+			        if(text == null || text ==""){
+			        	$("#txt_box").val("写点想法吧...")
+			        } 
+			    });
+			})
+		</script>
+		
+		<!-- 图片上传组件 -->
+		
+		<div class="weui-cells weui-cells_form" style="margin:0;clear:both">
+		  <div class="weui-cell">
+		    <div class="weui-cell__bd">
+		      <div class="weui-uploader">
+		        <div class="weui-uploader__hd" >
+		         	<span style="color:#ccc;font-size:12px;">图片上传</span>
+		        </div>
+		        <div class="weui-uploader__bd">
+		          <ul class="weui-uploader__files" id="uploaderFiles">
+		          </ul>
+		          <div class="weui-uploader__input-box">
+		            <button id="uploaderInput"  class="weui-uploader__input" type="file" accept="image/*" multiple=""></button>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<center><span class="btn_span next">下一步</span></center>
+		
+		</div>
+			
+		<div class="two">
+			<div class="top">
+				<span class="prev"><i class="Hui-iconfont" style="font-size: 10px;">&#xe67d;</i></span>
+				<p class="p1"><b>添加一个话题</b></p>
+			</div>
+			<div class="main">
+				<#if topiclist?? && (topiclist?size > 0)>
+					<#list topiclist as topic>
+						<div class="topiclist" data-id="${topic.id!}">
+							<div class="img">
+								<img src="${topic.imgurl!}"/>
+							</div>
+							<div class="topic">
+								<p class="title">#${topic.title!}#</p>
+								<p class="content">${topic.content!}</p>
+								<p class="num">${topic.postNum!}个帖子</p>
+							</div>
+						</div>
+					</#list>
+				</#if>
+			</div>
+			<center><span id="upload_img1" class="btn_span">发布</span></center>	
+		</div>
+		
+	  	<script type="text/javascript">
+		  	$(function() {
+		  		$(".next").click(function() {
+					$(".one").hide();
+					$(".two").show();
+				})
+				$(".prev").click(function() {
+					$(".one").show();
+					$(".two").hide();
+				})
+				$(".topiclist").click(function() {
+					$(this).addClass("on").siblings().removeClass("on");
+				})
+				
+				
+				var w=window.screen.width;
+				if(w<480){
+					var n=98/(1-(w-320)/w)-98;
+					$('.img img').jqthumb({
+						width:90+n,
+						height:90+n
+					});
+				}else{
+					$('.img img').jqthumb({
+						width:120,
+						height:120
+					});
+				}
+			})
+	  	
+	  		wxconfig(window.location);
+	  	
+		 	// 5 图片接口
+		    // 5.1 拍照、本地选图
+		    var images = {
+		      localId: [],
+		      serverId: []
+		    };
+		 	var arrayImgs = new Array();
+		    document.querySelector('#uploaderInput').onclick = function () {
+		      wx.chooseImage({
+		        success: function (res) {
+		          images.localId = res.localIds; 
+		          var localIds  = res.localIds;
+
+		          arrayImgs=[];
+		          for(var n=0;n<localIds.length;n++){
+			    	  wx.getLocalImgData({
+				    	  localId: localIds[n], // 图片的localID
+				    	  success: function (res) {
+				    	  var localData = res.localData; // localData是图片的base64数据，可以用img标签显示 
+				    	  if(window.__wxjs_is_wkwebview){
+				    		  arrayImgs.push(localData.replace('jgp', 'jpeg'));
+				    	  }else{
+				    		  arrayImgs.push(localData);
+				    	  }
+				    	    
+				    	  }
+				    	  });
+			      }
+		          
+		          
+		          if(window.__wxjs_is_wkwebview){  
+	            	  for (id in localIds) {
+	            		  wx.getLocalImgData({
+		                       localId: localIds[id],
+		                       success: function (res) {
+		                           var localData = res.localData;
+		                           localData = localData.replace('jgp', 'jpeg');
+		                           var tmpl = '<img class="weui-uploader__file weui-uploader__file_status" onclick="rmthis(this)" src="'+localData+'" data-src="'+localIds[id]+'"/>';
+		                           //alert(localData)
+		                           $("#uploaderFiles").append(tmpl)
+		                       },
+		                       fail:function(res){
+		                           alert(res.errMsg);
+		                       }
+		                   });
+	            	  }
+	               }else{
+	            	 	//遍历数组
+		              	for (id in localIds){	
+		            	   var tmpl = '<img class="weui-uploader__file weui-uploader__file_status" onclick="rmthis(this)" src="#url#" data-src="#url#"/>';
+		                   $("#uploaderFiles").append($(tmpl.replace(/#url#/ig, localIds[id])));
+		                   
+						} 
+	               }
+		          
+		        }
+		      });
+		    };
+		    
+		    //删除预览图片
+		    function rmthis(event){
+		    	$(event).remove()
+		    	var img_src = $(event).data('src')
+		    	img_src = img_src.replace("wxlocalresource","wxLocalResource")
+		    	
+		    	for (var i=0;i< images.localId.length;i++){
+		    		console.log(typeof(images.localId[i]),images.localId[i])
+		    		if(images.localId[i] == img_src){
+		    			// 相等，进行删除
+		    			images.localId.splice(i, 1);
+		    			images.serverId.splice(i, 1);
+		    		}
+		    	}
+		    }
+		   
+		    // 5.3 上传图片
+		    document.querySelector('#upload_img1').onclick = function () {
+		    	
+		    	 
+		    	
+		    var text = $("#txt_box").val();
+		    
+		    if(text.trim() === "写点想法吧..."){
+		    	alert("请分享一下自己的心情吧 :）")
+		    	return;
+		    }
+		      
+		     // 这里要做一个判断 如果没有图片的话 只向后台提交一个content
+		     if (images.localId.length == 0) {
+		    	topostwithoutimg()
+		        return;
+		      }
+		     
+		      topost(arrayImgs);
+		      
+		    };
+	  	
+		    
+		    function getContent(){
+		    	var txt = $('#txt_box').val()
+	    		//正则过滤
+	    		var rgExp = /([^\:\[\]]+)(?=\])/g
+	    		var temp = txt.match(rgExp)
+	    		var result = "<ul class='emoji-list'>";
+	    		
+				for(var i = 0 in temp){
+					console.log(temp[i])
+					before_word = "[:"+ temp[i] +"]";
+					after_word = "<li>&#x" + temp[i].toUpperCase() + ";</li>";
+					
+					console.log("before：",before_word)
+					console.log("after：",after_word)
+					
+					txt = txt.replace(before_word,after_word)
+				}
+				result = result + txt +"</ul>"
+	    		return result
+		    }
+		    
+		    function topost(obj){
+		    	
+		    	var index = layer.load(1, {
+			    	  shade: [0.5,'#ccc'] //0.1透明度的白色背景
+			    	});	
+			     
+		    	var content = getContent()
+		    	
+		    	var tid=$(".topiclist.on").attr("data-id");
+		    	
+				$.ajax({
+			       	 	url: '/qiniuImg',
+						data: {
+	 						"resImgurl":obj,
+	 						"content":content.trim(),
+	 						"tid":tid
+						},
+						type: 'post',
+						dataType: 'json',
+						cache: false,
+						success: function(data){
+							layer.close(index);
+	 						console.log(data)
+	 						if(data.re){
+	 							//console.log("成功写入数据库，进行页面跳转！")
+	 							//alert(data.msg)
+	 							layer.msg(data.msg);
+ 								location.replace('/index');//跳到主页
+	 							
+	 						}else{
+	 							alert(data.msg)
+	 						}
+	 					  }
+	 			}); 
+			}
+		    
+		    //没有图片
+		    function topostwithoutimg(){
+		    	var content = getContent();
+		    	var tid=$(".topiclist.on").attr("data-id");
+		    	
+		    	$.ajax({
+		       	 	url: '/qiniuImg',
+					data: {
+ 						"content":content.trim(),
+ 						"tid":tid
+					},
+					type: 'post',
+					dataType: 'json',
+					cache: false,
+					success: function(data){
+ 						console.log(data)
+ 						if(data.re){
+ 							alert(data.msg)
+							location.replace('/index');//跳到主页
+ 						}else{
+ 							alert(data.msg)
+ 						}
+ 					  } 
+ 			}); 
+		    }
+			
+	    </script>
+	    
+		</div>
+	</body>
+</html>

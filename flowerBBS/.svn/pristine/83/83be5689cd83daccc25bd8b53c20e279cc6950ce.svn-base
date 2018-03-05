@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<script src="/resource/js/jquery-3.1.1.min.js"></script>
+		<title>我的零钱</title>
+	</head>
+	<style>
+		.main{
+			text-align: center;
+			margin-top: 30%;
+		}
+		.p2{
+			font-size: 1.5em;
+		}
+		.p3{
+			background-color: #ff5b84;
+			width: 80%;
+			margin: auto;
+			color: #fff;
+		    padding: 5px;
+		    border-radius: 5px;
+		}
+		.p4{
+			color:#90c1c3;
+			font-size: 0.7em;
+			margin-bottom: 12%;
+		}
+		.p5{
+			text-decoration: underline;
+			font-size: 0.8em;
+			padding-top: 10%;
+    		border-top: 1px solid #e8e8e8;
+		}
+	</style>
+	<body>
+		<div class="container main">
+			<p class="p1">我的零钱</p>
+			<p class="p2">￥<span style="color: #ff9857;">${wallet!}</span></p>
+			<p class="p3">提现</p>
+			<p class="p4">零钱满1元方可提现</p>
+			<p class="p5"><b onclick="location.href='/wallet_detail'">零钱明细 ></b></p>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			$(".p3").click(function() {
+				var money=${wallet!};
+				if($.trim(money)<1){
+					alert("零钱满1元方可提现");
+				}else{
+					window.location.href='/tixian';
+				}
+			})
+		})
+	</script>
+</html>

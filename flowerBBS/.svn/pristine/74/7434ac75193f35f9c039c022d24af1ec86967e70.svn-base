@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<script src="/resource/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/resource/js/layer_mobile/layer.js"></script>
+		<script src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
+		<title>零钱提现</title>
+	</head>
+	<style>
+		body{
+			background-color: #f3f3f3;
+			margin: 0;
+		}
+		.main{
+			text-align: center;
+			background-color: #fff;
+			margin: 5%;
+    		padding: 3%;
+		}
+		.pMoney{
+			font-size: 1.2em;
+		}
+		.pMoney input{
+			border: none;
+			border-bottom: 1px solid #ccc;
+			width: 30%;
+			font-size: 1.2em;
+			color: #ff9857;
+		}
+		.pMoney input:FOCUS{
+			outline: none;
+		}
+		.tip{
+			font-size: 0.7em;
+    		color: #a5a4a4;
+		}
+		.tx{
+			background-color: #ff5b84;
+			width: 80%;
+			margin: auto;
+			color: #fff;
+		    padding: 5px;
+		    border-radius: 5px;
+		    margin: 12% auto;
+		}
+		
+	</style>
+	<body>
+
+		<div class="main">
+			<p>提现金额</p>
+			<p class="pMoney"><span>￥</span><input type="text" id="money" name="money"/></p>			
+			<p class="tip">当前余额为${wallet!}元 <span class="qx" style="color: #b9dae4;">全部提现</span></p>
+			<p class="tx">提现</p>		    
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		$(function() {
+			$(".pMoney input").focus();
+			$(".qx").click(function() {
+				var money=${wallet!};
+				$("#money").val(money);
+			})
+			
+			var flag=0;
+			$(".tx").click(function() {
+				flag++;
+				var index = layer.load(1, {
+			    	  shade: [0.5,'#ccc'] //0.1透明度的白色背景
+			    	});
+				var money=$("#money").val(); 
+				var money=(parseFloat(money)*100).toFixed(0);
+				if($.trim(money)=='' || $.trim(money)<100 ){
+					layer.close(index);
+					alert("提现金额必须大于等于1元");
+				}else{
+					
+					if(flag==1){
+						$.post('/tixianResult/'+money, function(data){
+							layer.close(index);
+							alert("提现成功");
+							window.location.replace("/mywallet");
+			    		})
+					}
+					
+				
+				}
+				
+			})
+		})
+	</script>
+</html>

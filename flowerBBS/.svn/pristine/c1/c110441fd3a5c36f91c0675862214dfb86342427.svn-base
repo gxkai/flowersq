@@ -1,0 +1,21 @@
+#测试数据库配置
+jdbcUrl=jdbc:mysql://116.62.66.227:3306/homedb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+
+
+user = root
+password = 123456
+
+host = http://hmm.d2dcloud.cn/porxy/index_Proxy
+hostbbs = http://hmm.d2dcloud.cn
+getTokenUrl=http://hmm.d2dcloud.cn/porxy/getToken
+
+
+token = weixin
+encryptMessage = false
+
+#门对门果园测试服务号的配置
+appId = wx2e3ba08228a63904
+appSecret = 083f7c0ef5a88b6f6b38c23ef554baa4
+encodingAesKey = lA4rWoCyiuLhV40BwDB3V6Wjoez0CUpag0ofWdElEFs
+mchId = 1244237602
+key = 42e77b63637ab381e8be5f8318cc28ax
